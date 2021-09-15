@@ -1,15 +1,34 @@
 import React, {useState} from 'react';
 import {Form,FormGroup,Input,Button} from 'reactstrap'
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import axios from 'axios';
+import {API_ENPOINT} from '../../common/utils/utils'
 
 export const Login = () =>{
-    const [username ,setUsername] = useState("");
+    const [email ,setEmail] = useState("");
     const [password ,setPassword] = useState("");
+    const [loader , setLoader] = useState(false)
+   // const loginurl = "https://check-chess21.chetandhangar.repl.co/api/login";
 
-    function handleLogin(e){
+    async function handleLogin(e){
         e.preventDefault();
-        setPassword("")
-        setUsername("")
+        try{
+            setLoader(true)
+            const response = await axios.post(`${API_ENPOINT}/api/login`, {
+                email,
+                password
+            }) 
+            console.log(response)
+            if(response.status === 200){
+                setLoader(false)
+                setEmail("")
+                setPassword("")
+            }
+        }catch(error){
+            setLoader(false)
+            console.log(error)
+        }
+       
     }
         return(
             <div className="container">
@@ -17,11 +36,11 @@ export const Login = () =>{
                     <FormGroup>
                         <Input 
                         type="text"
-                        name="username"
-                        id="username"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(username => username = e.target.value)}
+                        name="email"
+                        id="email"
+                        placeholder="email"
+                        value={email}
+                        onChange={(e) => setEmail(email => email = e.target.value)}
                         />
                     </FormGroup>
                     <FormGroup>
@@ -35,7 +54,8 @@ export const Login = () =>{
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Button color="primary" type="submit" value="submit">Login</Button>
+                        <Button color="primary" type="submit" value="submit">{loader ? <p>Loading...</p> 
+                        : <p>Login</p>}</Button>
                     </FormGroup>
                     <FormGroup>
                         <p>Don't have an account <Link to="/signup">SignUp</Link></p>

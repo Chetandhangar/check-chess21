@@ -12,7 +12,7 @@ export const Header = () => {
             <Navbar dark color="primary" expand="md">
                 <div className="container">
                 <NavbarToggler onClick={toggleNav}></NavbarToggler>
-                    <NavbarBrand>Chess21</NavbarBrand>
+                    <NavbarBrand>Check</NavbarBrand>
                     <Collapse isOpen={isNavOpen} navbar>
                     <Nav navbar>
                         <NavItem>

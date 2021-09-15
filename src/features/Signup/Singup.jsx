@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {Form,FormGroup,Input,Button} from 'reactstrap'
-import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
+import axios from 'axios';
+import {API_ENPOINT} from '../../common/utils/utils'
 
 export const SignUp= () =>{
     const [username ,setUsername] = useState("");
@@ -8,17 +10,37 @@ export const SignUp= () =>{
     const [firstname ,setFirstName] = useState("");
     const [lastname, setLastName] = useState("");
     const [email , setEmail] = useState("");
-    const [bio , setBio] = useState("")
-   // const [profileImg , setProfileImg] = useState("")
+    const [loader , setLoader] = useState(false)
 
-    function handleLogin(e){
+    const navigate = useNavigate();
+    
+    async function handleLogin(e){
         e.preventDefault();
-        setPassword("")
-        setUsername("")
-        setFirstName("")
-        setLastName("")
-        setEmail("")
-        setBio("")
+        try{
+            setLoader(true)
+            const response = await axios.post(`${API_ENPOINT}/api/signup`, {
+                firstName : firstname,
+                lastName : lastname,
+                email,
+                username,
+                password
+            })
+            console.log(response)
+            if(response.status === 200) {
+                setLoader(false)
+                setPassword("")
+                setUsername("")
+                setFirstName("")
+                setLastName("")
+                setEmail("")
+                navigate('/login')
+            }
+         
+        }catch(error){
+            setLoader(false)
+            console.log(error)
+        }
+      
     }
         return(
             <div className="container">
@@ -74,16 +96,8 @@ export const SignUp= () =>{
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Input 
-                        type="text"
-                        name="bio"
-                        value={bio}
-                        placeholder="Add Bio"
-                        onChange={(e) => setBio(bio => bio = e.target.value)}
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                        <Button color="primary" type="submit" value="submit">SignUp</Button>
+                        <Button color="primary" type="submit" value="submit">{loader ? <p>Loading..</p>
+                         : <p>SignUp</p>}</Button>
                     </FormGroup>
                 </Form>
             </div>
