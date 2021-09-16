@@ -20,3 +20,7 @@ export const setUser =  async(dispatch,setToken) => {
 
     login?.token && dispatch(setToken({token : login.token}))
 }
+
+export const checkFollow = (arr,userId) => {
+    return arr.find((userFollowd) => userFollowd._id === userId) ? true : false
+}

@@ -12,7 +12,11 @@ export const RenderNav = () => {
                <Nav navbar>
                         <NavItem>
                         <Link className="nav-link" to='/feed' style={{cursor : "pointer"}}>
-                              <span className="fa fa-home fa-lg"></span></Link>
+                              <span className="fa fa-home fa-lg"></span>Home</Link>
+                        </NavItem>
+                        <NavItem>
+                        <Link className="nav-link" to='/explore' style={{cursor : "pointer"}}>
+                              <span className="fa fa-hashtag fa-lg">Explore</span></Link>
                         </NavItem>
                         <NavItem>
                         <Link  className="nav-link" to={`/profile/${username}`} style={{cursor : "pointer"}}
@@ -23,6 +27,8 @@ export const RenderNav = () => {
                         >
                        <span className="fa fa-user fa-lg"></span>Profile</Link>
                         </NavItem>
+
+                      
                    
                     </Nav>
         </React.Fragment>

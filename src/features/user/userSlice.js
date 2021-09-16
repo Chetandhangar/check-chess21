@@ -46,6 +46,7 @@ export const handleUserSignUp = createAsyncThunk(
     }
 )
 
+
 export const handleLogOutUser = createAction('/user/handleLogOutUser');
 
 export const handleLoginUser = createAsyncThunk(
@@ -72,13 +73,28 @@ export const handleFetchUser = createAsyncThunk(
                     headers : {authorization : token}
                 })
                 console.log(response,'from fetch user server')
-                return response?.data
+                return response?.data;
 
             }catch(error){
                 console.log(error)
             }
     }
 )
+export const handleFetchUsers = createAsyncThunk(
+    'user/handleFetchUsers',
+    async({token}) => {
+        try{
+            const response = await axios.get(`${API_ENPOINT}/api/users`,{
+                headers : {authorization : token}
+            })
+            console.log(response , 'from fetch users')
+            return response?.data;
+        }catch(error){
+            console.log(error);
+        }
+    }
+)
+
 
 export const handleFetchUserProfile = createAsyncThunk(
     'user/handleFetchUserProfile' ,
@@ -92,6 +108,37 @@ export const handleFetchUserProfile = createAsyncThunk(
             console.log(error)
         }
       
+    }
+)
+
+export const handleFollow = createAsyncThunk(
+    '/user/handleFollow',
+    async({id,token}) => {
+        try{
+            const response = await axios.get(`${API_ENPOINT}/api/user/${id}/follow`,{
+                headers : {authorization : token}
+            })
+            console.log(response)
+            return response.data;
+        }catch(error){
+            console.log(error)
+        }
+        
+    }
+)
+export const handleUnFollow = createAsyncThunk(
+    '/user/handleFollow',
+    async({id,token}) => {
+        try{
+            const response = await axios.get(`${API_ENPOINT}/api/user/${id}/unfollow`,{
+                headers : {authorization : token}
+            })
+            console.log(response)
+            return response.data;
+        }catch(error){
+            console.log(error)
+        }
+        
     }
 )
 
@@ -160,6 +207,36 @@ const userSlice = createSlice({
         },
         [handleFetchUserProfile.rejected] : (state) => {
             state.userProfileStatus = 'error'
+        },
+        [handleFetchUsers.pending] : (state,action) => {
+            state.usersStatus = "loading"
+        },
+        [handleFetchUsers.fulfilled] : (state,action) => {
+            state.users = action.payload.users;
+            state.usersStatus = "success"
+        },
+        [handleFetchUsers.rejected] : (state,action) => {
+            state.usersStatus = "error"
+        },
+        [handleFollow.pending] : (state,action) => {
+            state.userFollowStatus = "loading"
+        },
+        [handleFollow.fulfilled] : (state,action) => {
+            state.userFollowStatus = "success";
+           
+        },
+        [handleFollow.rejected] : (state) => {
+            state.userFollowStatus = "error"
+        },
+        [handleUnFollow.pending] : (state,action) => {
+            state.userFollowStatus = "loading"
+        },
+        [handleUnFollow.fulfilled] : (state,action) => {
+            state.userFollowStatus = "success";
+          
+        },
+        [handleUnFollow.rejected] : (state) => {
+            state.userFollowStatus = "error"
         }
     }
 })
