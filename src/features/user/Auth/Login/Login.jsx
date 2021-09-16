@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import {Form,FormGroup,Input,Button} from 'reactstrap'
 import {Link} from 'react-router-dom';
-import {handleLoginUser} from '../userSlice'
+import {handleLoginUser} from '../../userSlice'
 import {useDispatch, useSelector} from 'react-redux';
 import { useNavigate } from  'react-router-dom'
 
@@ -13,7 +13,7 @@ export const Login = () =>{
     const [loader , setLoader] = useState(false)
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    const {logInStatus} =useSelector((state) => state.user)
+    const {logInStatus,token} =useSelector((state) => state.user)
 
     async function handleLogin(e){
         e.preventDefault();
@@ -24,13 +24,19 @@ export const Login = () =>{
     function handleOnChange(e){
         setUser({...user, [e.target.name] : e.target.value})
     }
+
+   useEffect(() => {
+    if (token) {
+       navigate('/feed');
+    }
+ });
     useEffect(() => {
         if(logInStatus === "loading"){
             setLoader(true)
         }
         if(logInStatus === "loginSuccess"){
             setLoader(false)
-            navigate('/')
+            navigate('/feed')
         }
         if(logInStatus === "error"){
             setLoader(false)

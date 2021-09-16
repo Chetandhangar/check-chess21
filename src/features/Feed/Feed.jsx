@@ -1,9 +1,9 @@
 import React from 'react';
 
-export const Home = () =>{
+export const Feed = () =>{
         return(
             <div>
-                Home Page
+                Feed Page
             </div>
         )
 }

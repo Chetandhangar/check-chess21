@@ -16,8 +16,8 @@ export const Header = () => {
                     <Collapse isOpen={isNavOpen} navbar>
                     <Nav navbar>
                         <NavItem>
-                        <Link className="nav-link" to='/' style={{cursor : "pointer"}}>
-                              <span className="fa fa-home fa-lg"></span>Home</Link>
+                        <Link className="nav-link" to='/feed' style={{cursor : "pointer"}}>
+                              <span className="fa fa-home fa-lg"></span></Link>
                         </NavItem>
                         <NavItem>
                         <Link className="nav-link" to='/profile' style={{cursor : "pointer"}}>
