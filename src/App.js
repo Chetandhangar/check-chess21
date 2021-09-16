@@ -4,16 +4,20 @@ import {Routes, Route} from 'react-router-dom';
 import {Feed, Login, Profile, SignUp , Header} from './features/index';
 import {PrivateRoute} from './features/user/Auth/PrivateRoute';
 import {setToken} from './features/user/userSlice'
-import {useDispatch} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
 import {setUser} from './common/utils/utils';
 
 
 function App() {
   const dispatch = useDispatch();
+  const {currentUser,token} = useSelector((state) => state.user)
+  console.log(currentUser,'from current user')
 
   useEffect(() => {
     setUser(dispatch,setToken)
-  })
+  },[])
+
+ 
 
   return (
     <div className="App">

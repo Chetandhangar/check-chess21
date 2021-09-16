@@ -48,8 +48,6 @@ export const handleUserSignUp = createAsyncThunk(
 
 export const handleLogOutUser = createAction('/user/handleLogOutUser');
 
-
-
 export const handleLoginUser = createAsyncThunk(
     'user/handleLoginUser',
     async(user) => {
@@ -66,6 +64,21 @@ export const handleLoginUser = createAsyncThunk(
     }
 )
 
+export const handleFetchUser = createAsyncThunk(
+    'user/handleFetchUser' ,
+    async({username , token}) => {
+            try{
+                const response  = await axios.get(`${API_ENPOINT}/api/user/${username}`,{
+                    headers : {authorization : token}
+                })
+                console.log(response,'from fetch user server')
+                return response?.data
+
+            }catch(error){
+                console.log(error)
+            }
+    }
+)
 
 
 
@@ -117,7 +130,11 @@ const userSlice = createSlice({
             state.userFollowStatus = "idle";
             state.userProfileEditStatus = "idle";
             localStorage?.removeItem("login");
-
+        },
+        
+        [handleFetchUser.fulfilled] : (state,action) => {
+            state.currentUser = action.payload.user;
+            state.currentUserStatus = "fetchUserSuccess"
         }
     }
 })

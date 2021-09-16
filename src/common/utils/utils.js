@@ -1,3 +1,4 @@
+import {handleFetchUser} from '../../features/user/userSlice'
 export const API_ENPOINT = "https://young-coast-47064.herokuapp.com";
 
 export const SetLocalStorage = ({token,user,}) => {
@@ -7,8 +8,15 @@ export const SetLocalStorage = ({token,user,}) => {
         id : user._id}))
 }
 
-export const setUser =  (dispatch,setToken) => {
+export const setUser =  async(dispatch,setToken) => {
     const login = JSON.parse(localStorage?.getItem("login"))
-    console.log("set user is called for token", login)
+
+    login?.token && login?.username  && 
+    (await dispatch(handleFetchUser({
+        username : login?.username,
+        token : login?.token
+    })
+    ))
+
     login?.token && dispatch(setToken({token : login.token}))
 }
