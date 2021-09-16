@@ -10,7 +10,7 @@ export const ProfileHeader = ({user}) => {
                </h5>
                </div>
                 <div>
-                    <h5>{user?.tweetsCount} Tweet</h5>
+                    <h5>{user?.tweetsCount} Tweets</h5>
                 </div>
 
             </div>

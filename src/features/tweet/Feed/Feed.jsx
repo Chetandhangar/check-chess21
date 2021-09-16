@@ -1,5 +1,7 @@
 import React from 'react';
-import {RenderNav} from '../../../common/Nav/Navbar'
+import {RenderNav} from '../../../common/Nav/Navbar';
+import {TimeLineFeed} from '../components/TimeLineFeed'
+
 export const Feed = () =>{
         return(
             <div className="container">
@@ -8,7 +10,7 @@ export const Feed = () =>{
                         <RenderNav />
                     </div>
                     <div className="col-md">
-                        Feed Page
+                        <TimeLineFeed />
                     </div>
                 </div>
               
