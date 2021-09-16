@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import {Form,FormGroup,Input,Button} from 'reactstrap'
 import {Link} from 'react-router-dom';
-import {handleLoginUser} from '../../userSlice'
+import {handleLoginUser} from '../../../userSlice'
 import {useDispatch, useSelector} from 'react-redux';
 import { useNavigate } from  'react-router-dom'
 

@@ -1,17 +1,16 @@
 import React , {useState} from 'react';
 import {Navbar,NavItem,Collapse,NavbarBrand, Nav,NavbarToggler,Button} from 'reactstrap';
 import {Link} from 'react-router-dom'
-import {handleLogOutUser} from '../user/userSlice';
-import {useDispatch,useSelector} from 'react-redux'
+import {useDispatch,useSelector} from 'react-redux';
+import {  handleLogOutUser } from '../../features/user/userSlice'
 
 export const Header = () => {
     const [isNavOpen , setNavOpen] = useState(false);
+    const dispatch = useDispatch();
+    const {token} = useSelector((state) => state.user)
     function toggleNav(){
         setNavOpen(isNavOpen => isNavOpen = !isNavOpen)
       }
-
-    const dispatch = useDispatch();
-    const {token} = useSelector((state) => state.user)
 
     return(
         <React.Fragment>
@@ -20,15 +19,7 @@ export const Header = () => {
                 <NavbarToggler onClick={toggleNav}></NavbarToggler>
                     <NavbarBrand>Check</NavbarBrand>
                     <Collapse isOpen={isNavOpen} navbar>
-                    <Nav navbar>
-                        <NavItem>
-                        <Link className="nav-link" to='/feed' style={{cursor : "pointer"}}>
-                              <span className="fa fa-home fa-lg"></span></Link>
-                        </NavItem>
-                        <NavItem>
-                        <Link className="nav-link" to='/profile' style={{cursor : "pointer"}}>
-                              <span className="fa fa-user fa-lg"></span>Profile</Link>
-                        </NavItem>
+                        <Nav navbar>
                         {token ? 
                         <NavItem>
                             <Button onClick={() => dispatch(handleLogOutUser())}>
@@ -39,7 +30,7 @@ export const Header = () => {
                              <Link className="nav-link" to='/login' style={{cursor : "pointer"}}>
                              <span className="fa fa-sign-in fa-lg">Login</span></Link>
                         </NavItem>}
-                    </Nav>
+                        </Nav>
                     </Collapse>
                 </div>
 

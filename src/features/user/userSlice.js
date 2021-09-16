@@ -5,7 +5,7 @@ import {API_ENPOINT,SetLocalStorage} from '../../common/utils/utils'
 const intialstate = {
     token : null,
 
-    currentUser : null,
+    currentUser :null,
     currentUserStatus : "idle",
 
     signUpStatus : "idle",
@@ -80,6 +80,21 @@ export const handleFetchUser = createAsyncThunk(
     }
 )
 
+export const handleFetchUserProfile = createAsyncThunk(
+    'user/handleFetchUserProfile' ,
+    async({username,token}) => {
+        try{
+            const response = await axios.get(`${API_ENPOINT}/api/user/${username}`, {
+                headers : {authorization : token}
+            })
+            return response?.data
+        }catch(error){
+            console.log(error)
+        }
+      
+    }
+)
+
 
 
 const userSlice = createSlice({
@@ -131,10 +146,20 @@ const userSlice = createSlice({
             state.userProfileEditStatus = "idle";
             localStorage?.removeItem("login");
         },
-        
+
         [handleFetchUser.fulfilled] : (state,action) => {
             state.currentUser = action.payload.user;
-            state.currentUserStatus = "fetchUserSuccess"
+            state.currentUserStatus = "success"
+        },
+        [handleFetchUserProfile.pending] : (state) => {
+            state.userProfileStatus = "loading"
+        },
+        [handleFetchUserProfile.fulfilled] : (state,action) => {
+            state.userProfile = action.payload.user;
+            state.userProfileStatus = "success";
+        },
+        [handleFetchUserProfile.rejected] : (state) => {
+            state.userProfileStatus = 'error'
         }
     }
 })

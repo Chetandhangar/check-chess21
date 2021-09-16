@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Form,FormGroup,Input,Button} from 'reactstrap'
 import {useNavigate} from 'react-router-dom'
 import {useDispatch,useSelector} from 'react-redux';
-import {handleUserSignUp} from '../../userSlice'
+import {handleUserSignUp} from '../../../userSlice'
 
 export const SignUp= () =>{
     const [user , setUser ] = useState({
