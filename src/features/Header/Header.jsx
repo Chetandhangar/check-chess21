@@ -1,11 +1,17 @@
 import React , {useState} from 'react';
-import {Navbar,NavItem,Collapse,NavbarBrand, Nav,NavbarToggler} from 'reactstrap';
+import {Navbar,NavItem,Collapse,NavbarBrand, Nav,NavbarToggler,Button} from 'reactstrap';
 import {Link} from 'react-router-dom'
+import {handleLogOutUser} from '../user/userSlice';
+import {useDispatch,useSelector} from 'react-redux'
+
 export const Header = () => {
     const [isNavOpen , setNavOpen] = useState(false);
     function toggleNav(){
         setNavOpen(isNavOpen => isNavOpen = !isNavOpen)
       }
+
+    const dispatch = useDispatch();
+    const {token} = useSelector((state) => state.user)
 
     return(
         <React.Fragment>
@@ -23,10 +29,16 @@ export const Header = () => {
                         <Link className="nav-link" to='/profile' style={{cursor : "pointer"}}>
                               <span className="fa fa-user fa-lg"></span>Profile</Link>
                         </NavItem>
+                        {token ? 
                         <NavItem>
-                        <Link className="nav-link" to='/login' style={{cursor : "pointer"}}>
+                            <Button onClick={() => dispatch(handleLogOutUser())}>
+                             <span className="fa fa-sign-out fa-lg">Logout</span>
+                             </Button>
+                        </NavItem> :
+                         <NavItem>
+                             <Link className="nav-link" to='/login' style={{cursor : "pointer"}}>
                              <span className="fa fa-sign-in fa-lg">Login</span></Link>
-                        </NavItem>
+                        </NavItem>}
                     </Nav>
                     </Collapse>
                 </div>

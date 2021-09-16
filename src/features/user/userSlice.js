@@ -46,6 +46,10 @@ export const handleUserSignUp = createAsyncThunk(
     }
 )
 
+export const handleLogOutUser = createAction('/user/handleLogOutUser');
+
+
+
 export const handleLoginUser = createAsyncThunk(
     'user/handleLoginUser',
     async(user) => {
@@ -97,6 +101,23 @@ const userSlice = createSlice({
         [handleLoginUser.rejected] : (state,action) => {
             state.logInStatus = "error"
             state.logInError = "Error while login"
+        },
+        [handleLogOutUser] : (state,action) => {
+            console.log("logout called")
+            state.token = null
+            state.currentUser = null;
+            state.currentUserStatus = 'idle';
+            state.signUpStatus = 'idle';
+            state.logInStatus = 'idle';
+            state.users = [];
+            state.usersStatus = "idle";
+            state.userProfile = null;
+            state.userProfileStatus = "idle";
+            state.userUnfollowStatus = "idle";
+            state.userFollowStatus = "idle";
+            state.userProfileEditStatus = "idle";
+            localStorage?.removeItem("login");
+
         }
     }
 })
