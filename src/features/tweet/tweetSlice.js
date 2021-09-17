@@ -5,7 +5,11 @@ import {API_ENPOINT} from '../../common/utils/utils';
 export const initalstate = {
 
     tweetPost : {},
-    tweetPostStatus :"idle"
+    tweetPostStatus :"idle",
+
+    tweets  : null,
+    tweetsStatus : "idle",
+    tweetsError : ""
 }
 
 export const handlePostTweet = createAsyncThunk(
@@ -23,6 +27,22 @@ export const handlePostTweet = createAsyncThunk(
     }
 )
 
+export const handleFetchFeed = createAsyncThunk(
+    'tweet/handleFetchFeed',
+    async({token}) => {
+        try{
+            const response = await axios.get(`${API_ENPOINT}/api/feed`,
+            {headers : {authorization : token}})
+            
+            console.log(response,'from fetch tweets');
+            return response.data;
+
+        }catch(error){
+            console.log(error)
+        }
+    } 
+) 
+
 
 const tweetSlice = createSlice({
     name  : "tweet",
@@ -37,7 +57,19 @@ const tweetSlice = createSlice({
         },
         [handlePostTweet.rejected] : (state) => {
             state.tweetPostStatus = "error"
+        },
+        [handleFetchFeed.pending] : (state,action) => {
+            state.tweetsStatus = "loading"
+        },
+        [handleFetchFeed.fulfilled] : (state,action) => {
+            state.tweetsStatus = "success";
+            state.tweets = action.payload.tweets
+        },
+        [handleFetchFeed.rejected] : (state) => {
+            state.tweetsStatus = "error";
+            state.tweetsError = "Error occure while fetching the tweets"
         }
+
     }
 })
 
