@@ -1,11 +1,12 @@
 import React,{useEffect} from 'react';
 import {useSelector,useDispatch} from 'react-redux';
 import {handleFetchFeed} from '../tweetSlice';
+import {handleFetchUser} from '../../user/userSlice'
 import {TweetDetails} from './TweetDetails';
 
 export const TweetFeed = () => {
-    const {token} = useSelector((state) => state.user);
-    const {tweetsStatus,tweets,tweetPostStatus} = useSelector((state) => state.tweet);
+    const {token,currentUser} = useSelector((state) => state.user);
+    const {tweetsStatus,tweets,tweetPostStatus,tweetLikedStatus} = useSelector((state) => state.tweet);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -23,6 +24,16 @@ export const TweetFeed = () => {
                 }
             })();
     },[tweetPostStatus,dispatch,token])
+
+    useEffect(() => {
+        (async() => {
+            if(tweetLikedStatus === "success"){
+                await dispatch(handleFetchUser({username : currentUser?.username,token}))
+                await dispatch(handleFetchFeed({token}))
+            }
+        })();
+    },[token,dispatch,tweetLikedStatus])
+
 
     console.log(tweets,'from tweets feed componet')
 

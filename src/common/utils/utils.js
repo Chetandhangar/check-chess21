@@ -24,3 +24,11 @@ export const setUser =  async(dispatch,setToken) => {
 export const checkFollow = (arr,userId) => {
     return arr.find((userFollowd) => userFollowd._id === userId) ? true : false
 }
+
+
+export const checkLikes = (arr, tweetId) => {
+    return arr.find((userLikedTweet) => userLikedTweet._id === tweetId)
+       ? true
+       : false;
+ };
+ 

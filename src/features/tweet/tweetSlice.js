@@ -9,7 +9,11 @@ export const initalstate = {
 
     tweets  : null,
     tweetsStatus : "idle",
-    tweetsError : ""
+    tweetsError : "",
+
+    tweetsLiked: {},
+    tweetLikedStatus: 'idle',
+    tweetLikedError: '',
 }
 
 export const handlePostTweet = createAsyncThunk(
@@ -42,6 +46,20 @@ export const handleFetchFeed = createAsyncThunk(
         }
     } 
 ) 
+export const handleToggleLikeSubmit = createAsyncThunk(
+    'tweet/handleToggleLikeSubmit',
+    async({id, token}) => {
+            try{
+                const response = await axios.get(`${API_ENPOINT}/api/tweet/${id}/togglelike`,
+                {headers : {authorization : token}})
+                console.log(response,'from tweet toggle');
+                return response.data;
+            }catch(error){
+                console.log(error);
+
+            }
+    }
+)
 
 
 const tweetSlice = createSlice({
@@ -68,6 +86,17 @@ const tweetSlice = createSlice({
         [handleFetchFeed.rejected] : (state) => {
             state.tweetsStatus = "error";
             state.tweetsError = "Error occure while fetching the tweets"
+        },
+        [handleToggleLikeSubmit.pending] : (state) => {
+            state.tweetLikedStatus = "loading";
+        },
+        [handleToggleLikeSubmit.fulfilled] : (state,action) => {
+            state.tweetLikedStatus = "success";
+            state.tweetsLiked = action.payload.likes
+        }, 
+        [handleToggleLikeSubmit.rejected]  :(state,action) => {
+            state.tweetLikedStatus = "error";
+
         }
 
     }

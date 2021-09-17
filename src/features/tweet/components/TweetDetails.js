@@ -1,7 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {} from '../../../common/utils/utils';
-import {Button} from 'reactstrap';
+import {checkLikes} from '../../../common/utils/utils'
+import {useSelector, useDispatch} from 'react-redux';
+import {handleToggleLikeSubmit} from '../tweetSlice'
 
 export const TweetDetails = ({tweet}) => {
 
@@ -9,6 +10,9 @@ export const TweetDetails = ({tweet}) => {
         const date = new Date(ISOString).toUTCString().substring(4, 16);
         return date;
      };
+
+     const {currentUser,token} = useSelector((state) => state.user)
+     const dispatch = useDispatch();
 
     return(
         <div className="container">
@@ -49,16 +53,36 @@ export const TweetDetails = ({tweet}) => {
                 </div>
                 <div className="text-center">
                     <div className="text-center">
-                    <Button>
-                    <span
-                    className="fa fa-heart fa-sm"
-                    aria-hidden="true"
-                    ></span>
-                    </Button>
-                    <Button  aria-hidden="true"><span
-                    className="fa fa-bookmark" aria-hidden="true"
+                        {!checkLikes(currentUser?.liked, tweet?._id) ? (
+                              <button 
+                              className="btn bg-transparent"
+                              style={{cursor : "pointer"}}
+                              onClick={() => dispatch(handleToggleLikeSubmit({id :tweet?._id,token}))}
+                              >
+                              <span
+                              className="fa fa-heart-o fa-sm"
+                              aria-hidden="true"
+                                >{tweet?.likesCount}</span>
+                              </button>
+                        )  :
+                        (
+                            <button
+                             className="btn bg-transparent"
+                             onClick={() => dispatch(handleToggleLikeSubmit({id :tweet?._id,token}))}
+                             >
+                           <span
+                           className="fa fa-heart fa-sm"
+                           aria-hidden="true"
+                           >{tweet?.likesCount}</span>
+                           </button>
+
+                        )
+                    }
+                  
+                    <button className="btn bg-transparent"  aria-hidden="true"><span
+                    className="fa fa-bookmark-o" aria-hidden="true"
                    ></span>
-                    </Button>
+                    </button>
                     </div>
                
                     

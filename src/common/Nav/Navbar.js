@@ -19,6 +19,10 @@ export const RenderNav = () => {
                               <span className="fa fa-hashtag fa-lg">Explore</span></Link>
                         </NavItem>
                         <NavItem>
+                        <Link className="nav-link" to='/explore' style={{cursor : "pointer"}}>
+                              <span className="fa fa-bookmark fa-lg">Bookmarks</span></Link>
+                        </NavItem>
+                        <NavItem>
                         <Link  className="nav-link" to={`/profile/${username}`} style={{cursor : "pointer"}}
                          onClick={() => dispatch(handleFetchUserProfile({
                             username:username,
