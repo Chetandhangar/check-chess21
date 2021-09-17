@@ -6,8 +6,9 @@ import {TweetDetails} from './TweetDetails';
 
 export const TweetFeed = () => {
     const {token,currentUser} = useSelector((state) => state.user);
-    const {tweetsStatus,tweets,tweetPostStatus,tweetLikedStatus} = useSelector((state) => state.tweet);
+    const {tweetsStatus,tweets,tweetPostStatus,tweetLikedStatus,tweetBookmarkStatus} = useSelector((state) => state.tweet);
     const dispatch = useDispatch();
+    const username = currentUser?.username
 
     useEffect(() => {
         (async() => {
@@ -28,11 +29,15 @@ export const TweetFeed = () => {
     useEffect(() => {
         (async() => {
             if(tweetLikedStatus === "success"){
-                await dispatch(handleFetchUser({username : currentUser?.username,token}))
+                await dispatch(handleFetchUser({username,token}))
+                await dispatch(handleFetchFeed({token}))
+            }
+            if(tweetBookmarkStatus === "success"){
+                await dispatch(handleFetchUser({username,token}))
                 await dispatch(handleFetchFeed({token}))
             }
         })();
-    },[token,dispatch,tweetLikedStatus])
+    },[token,dispatch,tweetLikedStatus,username,tweetBookmarkStatus])
 
 
     console.log(tweets,'from tweets feed componet')

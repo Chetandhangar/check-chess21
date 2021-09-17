@@ -1,8 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {checkLikes} from '../../../common/utils/utils'
+import {checkLikes,checkBookmarks} from '../../../common/utils/utils'
 import {useSelector, useDispatch} from 'react-redux';
-import {handleToggleLikeSubmit} from '../tweetSlice'
+import {handleToggleLikeSubmit, handleToggleBookMark} from '../tweetSlice'
 
 export const TweetDetails = ({tweet}) => {
 
@@ -79,10 +79,23 @@ export const TweetDetails = ({tweet}) => {
                         )
                     }
                   
-                    <button className="btn bg-transparent"  aria-hidden="true"><span
-                    className="fa fa-bookmark-o" aria-hidden="true"
-                   ></span>
-                    </button>
+                  {
+                      !checkBookmarks(currentUser?.bookmarked, tweet?._id) ? (
+                        <button 
+                        className="btn bg-transparent"
+                        onClick={() => dispatch(handleToggleBookMark({id : tweet?._id, token}))}
+                        ><span
+                        className="fa fa-bookmark-o" aria-hidden="true"></span>
+                        </button>
+                      ) : 
+                      <button 
+                        className="btn bg-transparent"
+                        onClick={() => dispatch(handleToggleBookMark({id : tweet?._id, token}))}>
+                        <span
+                        className="fa fa-bookmark" aria-hidden="true"></span>
+                        </button>
+                  }
+                    
                     </div>
                
                     

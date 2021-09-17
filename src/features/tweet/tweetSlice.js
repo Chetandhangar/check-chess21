@@ -14,6 +14,10 @@ export const initalstate = {
     tweetsLiked: {},
     tweetLikedStatus: 'idle',
     tweetLikedError: '',
+
+    tweetsBookmarked: {},
+    tweetBookmarkStatus: 'idle',
+    tweetBookmarkError: '',
 }
 
 export const handlePostTweet = createAsyncThunk(
@@ -61,6 +65,21 @@ export const handleToggleLikeSubmit = createAsyncThunk(
     }
 )
 
+export const handleToggleBookMark = createAsyncThunk(
+    'tweet/handleToggleBookMark',
+    async({id,token}) => {
+        try{
+            const response = await axios.get(`${API_ENPOINT}/api/tweet/${id}/togglebookmark`,{
+                headers : {authorization : token}
+            })
+            console.log(response,'from toggle bookmarked')
+            return response.data;
+
+        }catch(error){
+            console.log(error)
+        }
+    }
+)
 
 const tweetSlice = createSlice({
     name  : "tweet",
@@ -97,7 +116,19 @@ const tweetSlice = createSlice({
         [handleToggleLikeSubmit.rejected]  :(state,action) => {
             state.tweetLikedStatus = "error";
 
-        }
+        },
+
+        [handleToggleBookMark.pending]: (state, action) => {
+            state.tweetBookmarkStatus = 'loading';
+         },
+         [handleToggleBookMark.fulfilled]: (state, action) => {
+            state.tweetsBookmarked = action.payload.bookmarks;
+            state.tweetBookmarkStatus = 'success';
+         },
+         [handleToggleBookMark.rejected]: (state, action) => {
+            state.tweetBookmarkError = "Error while toggle bookmark";
+            state.tweetBookmarkStatus = 'error';
+         },
 
     }
 })
