@@ -1,7 +1,7 @@
 import React,{useEffect}from 'react';
 import './App.css';
 import {Routes, Route} from 'react-router-dom';
-import {Feed, Login, Profile, SignUp , Header , Explore} from './features/index';
+import {Feed, Login, Profile, SignUp , Header , Explore, BookMark} from './features/index';
 import {PrivateRoute} from './features/user/pages/Auth/PrivateRoute';
 import {setToken, handleFetchUser,handleFetchUserProfile , handleFetchUsers} from './features/user/userSlice'
 import {useDispatch,useSelector} from 'react-redux';
@@ -40,6 +40,7 @@ function App() {
       <PrivateRoute path="/feed" element={<Feed />}/>
       <PrivateRoute path="/profile/:user" element={<Profile />} />
       <PrivateRoute path="/explore" element={<Explore />} />
+      <PrivateRoute path="/bookmark" element={<BookMark />} />
      </Routes>
     </div>
   );

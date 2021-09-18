@@ -3,4 +3,5 @@ export {Login} from './user/pages/Auth/Login/Login';
 export {Profile} from './user/pages/profile/Profile';
 export {SignUp} from './user/pages/Auth/Signup/Singup';
 export {Header} from  '../common/Header/Header';
-export {Explore} from './user/pages/Explore/Explore'
+export {Explore} from './user/pages/Explore/Explore';
+export {BookMark} from './user/pages/BookMark/BookMark'
