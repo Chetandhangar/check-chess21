@@ -4,6 +4,9 @@ const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 550,
     },
+    rootTweet: {
+        maxWidth: 580,
+      },
     media: {
       height: 0,
       paddingTop: '56.25%', // 16:9
@@ -22,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(4),
         alignItems: 'center',
       },
+      btnTweet : {
+        marginLeft: 'auto',
+      }
   }));
 
   export default useStyles;
