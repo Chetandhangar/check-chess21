@@ -1,9 +1,12 @@
 import React, {useState,useEffect} from 'react';
-import {Form,FormGroup,Input,Button} from 'reactstrap'
 import {Link} from 'react-router-dom';
 import {handleLoginUser} from '../../../userSlice'
 import {useDispatch, useSelector} from 'react-redux';
-import { useNavigate } from  'react-router-dom'
+import { useNavigate } from  'react-router-dom';
+import useStyles from './loginStyle';
+import {Container,CssBaseline,Typography,Avatar,TextField,
+    Button} from '@material-ui/core';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 export const Login = () =>{
     const [user,setUser] = useState({
@@ -14,7 +17,7 @@ export const Login = () =>{
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const {logInStatus,token} =useSelector((state) => state.user)
-
+    const classes = useStyles();
     async function handleLogin(e){
         e.preventDefault();
        dispatch(handleLoginUser(user))
@@ -43,36 +46,60 @@ export const Login = () =>{
         }
     },[logInStatus,navigate])
         return(
-            <div className="container">
-                <Form onSubmit={handleLogin}>
-                    <FormGroup>
-                        <Input 
-                        type="text"
-                        name="email"
+            <Container component="main" maxWidth="xs">
+            <CssBaseline>
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign in
+                    </Typography>
+
+                    <form className={classes.form} noValidate onSubmit={handleLogin}>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
                         id="email"
-                        placeholder="email"
+                        label="email"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
                         value={user.email}
                         onChange={(e) => handleOnChange(e)}
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                        <Input 
-                        type="password"
+                    />
+                     <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
                         name="password"
+                        label="Password"
+                        type="password"
                         id="password"
+                        autoComplete="current-password"
                         value={user.password}
-                        placeholder="Password"
-                        onChange={(e) =>handleOnChange(e)}
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                        <Button color="primary" type="submit" value="submit">{loader ? <p>Loading...</p> 
-                        : <p>Login</p>}</Button>
-                    </FormGroup>
-                    <FormGroup>
-                        <p>Don't have an account <Link to="/signup">SignUp</Link></p>
-                    </FormGroup>
-                </Form>
-            </div>
+                        onChange={(e) => handleOnChange(e)}
+                    />
+                      <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                    >
+                       {loader ? "Signing..." : "Sign In"}
+                    </Button>
+                    <Typography>
+                    <Link to="/signup" variant="body2">
+                        {"Don't have an account? Sign Up"}
+                    </Link>
+                    </Typography>
+                    </form>
+                </div>
+            </CssBaseline>
+        </Container>
         )
 }

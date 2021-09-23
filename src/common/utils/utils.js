@@ -1,5 +1,5 @@
 import {handleFetchUser} from '../../features/user/userSlice'
-export const API_ENPOINT = "https://young-coast-47064.herokuapp.com";
+export const API_ENPOINT = "https://check-chess21.chetandhangar.repl.co";
 
 export const SetLocalStorage = ({token,user,}) => {
     localStorage?.setItem("login" , JSON.stringify({token, 
