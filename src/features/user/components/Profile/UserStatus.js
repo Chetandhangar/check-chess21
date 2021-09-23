@@ -1,7 +1,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux'
 import {} from '../../userSlice';
-import {Button} from 'reactstrap'
+import {Button} from '@material-ui/core'
 
 export const UserStatus = ({user})  =>{
     const {currentUser} = useSelector((state) => state.user)
