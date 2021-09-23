@@ -1,13 +1,14 @@
 import React from 'react';
 import {useSelector} from 'react-redux'
 import {ExploreProfile} from './ExploreProfile'
+import {ExploreHeader} from './ExploreHeader';
 
 export const ExploreTimeLine = () => {
     const {currentUser, users} = useSelector((state) => state.user)
     return(
         <div className="conainer">
         <div>
-            Explre Header
+            <ExploreHeader />
         </div>
          {users.map((user) => {
              return(

@@ -3,7 +3,11 @@ import {makeStyles} from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 650,
+      maxHeight : "50%"
     },
+    rootTweet: {
+        maxWidth: 680,
+      },
     media: {
       height: 0,
       paddingTop: '56.25%', // 16:9
@@ -22,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(4),
         alignItems: 'center',
       },
+      btnTweet : {
+        marginLeft: 'auto',
+      }
   }));
 
   export default useStyles;

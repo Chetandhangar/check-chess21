@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const BookMarkHeader = () =>{
+export const ExploreHeader = () =>{
     const classes = useStyles();
     return(
         <List className={classes.root}>
@@ -29,23 +29,10 @@ export const BookMarkHeader = () =>{
                     <ArrowBackIcon />
                 </Avatar>
         </ListItemAvatar>
-        <ListItemText primary="BookMarks" />
+        <ListItemText primary="Explore" />
         </ListItem>
         </Link>
         </List>
         
     )
 }
-
-/*
-   <div className="container">
-            <div className="card">
-                <div className="shadow p-1 mb-3 bg-white rounded">
-                    <Link 
-                    to={`/feed`}
-                    ><span className="fa fa-arrow-left"></span></Link>
-                    <p className="font-weight-bolder">Bookmark</p>
-                </div>
-            </div>
-        </div>
-*/
