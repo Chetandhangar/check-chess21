@@ -38,7 +38,11 @@ export const UserProfileTweet = ({tweet}) => {
             <CardHeader
                     avatar={
                         <Avatar aria-label="recipe" className={classes.avatar}>
-                        <Link to={`/profile/${tweet?.user?.username}`}>
+                        <Link to={`/profile/${tweet?.user?.username}`}
+                          onClick={() => dispatch(handleFetchUserProfile({
+                            username:tweet?.user?.username,
+                            token
+                        }))}>
                         <img  
                         style={{height: 35, width : 35}}
                         src='https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png' 
@@ -49,14 +53,24 @@ export const UserProfileTweet = ({tweet}) => {
                     action={
                     <Typography style={{fontSize : "0.8rem"}}>.{formatDate(tweet?.createdAt)}</Typography>
                     }
-                    title={tweet?.user?.firstName && <Link
+                    title={tweet?.user?.firstName && 
+                    <Link
                     className="bg-light text-dark"
-                    to={`/profile/${tweet?.user?.username}`}>
+                    to={`/profile/${tweet?.user?.username}`}
+                    onClick={() => dispatch(handleFetchUserProfile({
+                        username:tweet?.user?.username,
+                        token
+                    }))}>
                         {tweet?.user?.firstName} {" "} {tweet?.user?.lastName}
                     </Link>}
                     subheader={tweet?.user?.username &&
-                     <Link to={`/profile/${tweet?.user?.username}`}
-                     className="bg-light text-dark">
+                     <Link 
+                     to={`/profile/${tweet?.user?.username}`}
+                     className="bg-light text-dark"
+                     onClick={() => dispatch(handleFetchUserProfile({
+                        username:tweet?.user?.username,
+                        token
+                    }))}>
                         {`@${tweet?.user?.username}`}
                     </Link>}
                 />
